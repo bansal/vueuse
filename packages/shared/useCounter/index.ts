@@ -9,6 +9,7 @@ import {
 export interface UseCounterOptions {
   min?: number
   max?: number
+  step?: number
 }
 
 export interface UseCounterReturn {
@@ -58,10 +59,11 @@ export function useCounter(initialValue: MaybeRef<number> = 0, options: UseCount
   const {
     max = Number.POSITIVE_INFINITY,
     min = Number.NEGATIVE_INFINITY,
+    step = 1,
   } = options
 
-  const inc = (delta = 1) => count.value = Math.max(Math.min(max, count.value + delta), min)
-  const dec = (delta = 1) => count.value = Math.min(Math.max(min, count.value - delta), max)
+  const inc = (delta = step) => count.value = Math.max(Math.min(max, count.value + delta), min)
+  const dec = (delta = step) => count.value = Math.min(Math.max(min, count.value - delta), max)
   const get = () => count.value
   const set = (val: number) => (count.value = Math.max(min, Math.min(max, val)))
   const reset = (val = _initialValue) => {
